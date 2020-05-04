@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text, Button, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import ListNotes from '../ListNotes/list-notes'
 import styles from './home-style'
 
@@ -10,10 +11,12 @@ import {
 } from '@expo/vector-icons'
 
 export default function Home() {
+    const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Note')}>
                     <SimpleLineIcons style={[styles.icon, {marginLeft: 10,}]} size={20} name="menu"/>
                 </TouchableOpacity>
                 <Text style={styles.title}>All notes</Text>

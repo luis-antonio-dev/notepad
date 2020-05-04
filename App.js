@@ -1,10 +1,19 @@
 import React from 'react'
-import { Text, View, Button } from 'react-native'
-// import Home from './source/pages/Home/home'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+
+const AppStack = createStackNavigator();
+
+import Home from './source/pages/Home/home'
 import Note from './source/pages/Note/note'
 
 export default function App() {
     return (
-        <Note />
+        <NavigationContainer>
+            <AppStack.Navigator screenOptions={{headerShown: false}}>
+                <AppStack.Screen name="Home" component={Home}/>
+                <AppStack.Screen name="Note" component={Note}/>
+            </AppStack.Navigator>
+        </NavigationContainer>
     )
 }

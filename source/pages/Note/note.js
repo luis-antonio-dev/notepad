@@ -5,6 +5,7 @@ import { View,
     KeyboardAvoidingView, 
     TouchableOpacity 
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import styles from './note-style'
 
@@ -18,7 +19,9 @@ import {
     FontAwesome5 
  } from '@expo/vector-icons'
 
-export default function note() {
+export default function Note() {
+    const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -38,7 +41,7 @@ export default function note() {
                 </View>
 
                 <View style={styles.actionButtons}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
                         <Text style={styles.textButton}>Save</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>

@@ -11,7 +11,7 @@ export default StyleSheet.create({
     header: {
         width: '100%',
         backgroundColor: '#fff',
-        height: 40,
+        height: 50,
         flexDirection: 'row',
         alignItems: 'center'
     },
