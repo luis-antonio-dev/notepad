@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Button, TouchableOpacity } from 'react-native'
-import ListNotes from '../listNotes/list-notes'
+import ListNotes from '../ListNotes/list-notes'
 import styles from './home-style'
 
 import { 

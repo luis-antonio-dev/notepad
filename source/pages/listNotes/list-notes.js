@@ -2,7 +2,7 @@ import React from 'react'
 import { View, Text, Button } from 'react-native'
 
 import styles from './list-notes-style'
-import NoteItem from '../noteItem/note-item'
+import NoteItem from '../NoteItem/note-item'
 
 export default function listNotes() {
     return (
@@ -10,7 +10,7 @@ export default function listNotes() {
             <NoteItem 
                 title="React Native"
                 content="Expo init <nome do projeto>"
-                modifiedDate="May 1, 2020"
+                modifiedDate="May 1, 2021"
                 creationDate="Mar 27, 2020"
             />
 
