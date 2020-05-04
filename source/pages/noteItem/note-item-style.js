@@ -17,6 +17,7 @@ export default StyleSheet.create({
         shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 1,
+        marginBottom: 10,
     },
     header: {
         width: '100%'
