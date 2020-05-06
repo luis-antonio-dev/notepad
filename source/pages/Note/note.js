@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, 
     Text, 
     TextInput, 
@@ -19,8 +19,20 @@ import {
     FontAwesome5 
  } from '@expo/vector-icons'
 
+import firebaseConnection from '../../services/firebase'
+
 export default function Note() {
     const navigation = useNavigation()
+    
+    const [content, setContent] = useState(String())
+    const [title, setTitle] = useState(String())
+
+    function saveNote() {
+        firebaseConnection.database().ref('notes').set({
+            title,
+            content
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -41,7 +53,7 @@ export default function Note() {
                 </View>
 
                 <View style={styles.actionButtons}>
-                    <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={styles.button} onPress={saveNote}>
                         <Text style={styles.textButton}>Save</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
@@ -54,10 +66,19 @@ export default function Note() {
             </View>
 
             <View style={styles.labelInput}>
-                <TextInput style={styles.title} placeholder="Title"/>
+                <TextInput 
+                    style={styles.title}
+                    placeholder="Title"
+                    onChangeText={text => setTitle(text)}
+                />
 
                 <KeyboardAvoidingView behavior='padding'>
-                    <TextInput placeholder="Notes" style={styles.content} multiline={true}/>
+                    <TextInput 
+                        placeholder="Notes" 
+                        style={styles.content} 
+                        multiline={true}
+                        onChangeText={text => setContent(text)}
+                    />
                 </KeyboardAvoidingView>
             </View>
 
