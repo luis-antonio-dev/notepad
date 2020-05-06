@@ -19,6 +19,9 @@ export default StyleSheet.create({
         elevation: 1,
         marginBottom: 10,
     },
+    id: {
+        display: 'none'
+    },
     header: {
         width: '100%'
     },

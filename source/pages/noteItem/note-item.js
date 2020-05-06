@@ -5,6 +5,10 @@ import styles from './note-item-style'
 export default function noteItem(props) {
     return (
         <View style={styles.container}>
+            <View style={styles.id}>
+                <Text>{props.id}</Text>
+            </View>
+
             <View style={styles.header}>
                 <Text style={styles.title}>{props.title}</Text>
             </View>

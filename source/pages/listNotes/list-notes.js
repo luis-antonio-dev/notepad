@@ -1,100 +1,65 @@
-import React from 'react'
-import { View, Button } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Button, TouchableOpacity } from 'react-native'
+import { FlatList } from 'react-native-gesture-handler'
 
 import styles from './list-notes-style'
 import NoteItem from '../NoteItem/note-item'
-import { FlatList } from 'react-native-gesture-handler'
+
+import { useNavigation } from '@react-navigation/native'
+import firebase from '../../services/firebase'
 
 export default function listNotes() {
-    const data = [
-        {
-            id: "1",
-            title: "React Native",
-            content: "Expo init <nome do projeto>",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "2",
-            title: "Minha anotação",
-            content: "Conteúdo da minha anotação",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "3",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "4",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "5",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "6",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "7",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "8",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "9",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-        {
-            id: "10",
-            title: "Terceira anotação",
-            content: "Barulho",
-            modifiedDate: "May 1, 2020",
-            creationDate: "Mar 27, 2020"
-        },
-    ]
+    const navigation = useNavigation()
+    const [data, setData] = useState([])
+    
+    async function getNotes() {
+        var notes = []
+
+        await firebase.database().ref('notes').once('value', (data) => {
+            data = data.toJSON()
+            
+            for(var key in data) {
+                const id = key
+                const title = data[key]['title']
+                const content = data[key]['content']
+
+                notes.push({
+                    id,
+                    title,
+                    content
+                })
+            }
+
+           
+        }).then(setData(notes))
+    }
+
+    function navigateToNote(id) {
+        navigation.navigate('Note', { id })
+    }
+
+    useEffect(() => {
+        getNotes()
+    }, [])
+
     return (
         <View style={styles.container}>
             <FlatList
                 style={{width: '100%'}}
                 data={data}
                 renderItem={({item}) => (
-                    <View style={{width: '100%', alignItems: 'center'}}>
-                        <NoteItem 
+                    <TouchableOpacity onPress={() => navigateToNote(item.id)} style={{width: '100%', alignItems: 'center'}}>
+                        <NoteItem
+                            id={item.id}
                             title={item.title}
                             content={item.content}
-                            modifiedDate={item.modifiedDate}
-                            creationDate={item.creationDate}
+                            modifiedDate={"May 1, 2020"}
+                            creationDate={"Mar 27, 2020"}
                         />
-                    </View>
+                    </TouchableOpacity>
                 )}
                 keyExtractor={item => item.id}
-            />
+                />
         </View>
     )
 }

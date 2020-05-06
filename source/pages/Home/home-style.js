@@ -26,6 +26,31 @@ export default StyleSheet.create({
         width: '65%'
     },
 
+    button: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: '#d85a2c',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 20,
+        right: 20,
+
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+
+        elevation: 24,
+    },
+    textButton: {
+        fontSize: 40,
+        color: '#fff',
+    },
     icon: {
         color: '#d85a2c',
     }

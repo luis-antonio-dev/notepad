@@ -5,10 +5,9 @@ import { View,
     KeyboardAvoidingView, 
     TouchableOpacity 
 } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 import styles from './note-style'
-
 import {
     MaterialCommunityIcons,
     SimpleLineIcons,
@@ -20,18 +19,24 @@ import {
  } from '@expo/vector-icons'
 
 import firebaseConnection from '../../services/firebase'
+import uniqueId from '../../services/unique-id'
 
 export default function Note() {
     const navigation = useNavigation()
+    const route = useRoute()
     
     const [content, setContent] = useState(String())
     const [title, setTitle] = useState(String())
 
-    function saveNote() {
-        firebaseConnection.database().ref('notes').set({
+    async function saveNote(id) {
+        if (id === undefined) {
+            id = uniqueId()
+        }
+
+        await firebaseConnection.database().ref('notes/' + id.toString()).set({
             title,
             content
-        })
+        }).then(navigation.navigate('Home'))
     }
 
     return (
@@ -53,7 +58,7 @@ export default function Note() {
                 </View>
 
                 <View style={styles.actionButtons}>
-                    <TouchableOpacity style={styles.button} onPress={saveNote}>
+                    <TouchableOpacity style={styles.button} onPress={() => saveNote(route.params.id)}>
                         <Text style={styles.textButton}>Save</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button}>
